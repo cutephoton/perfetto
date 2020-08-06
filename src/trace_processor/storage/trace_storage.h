@@ -42,6 +42,7 @@
 #include "src/trace_processor/tables/profiler_tables.h"
 #include "src/trace_processor/tables/slice_tables.h"
 #include "src/trace_processor/tables/track_tables.h"
+#include "src/trace_processor/tables/clock_tables.h"
 #include "src/trace_processor/types/variadic.h"
 
 namespace perfetto {
@@ -484,6 +485,13 @@ class TraceStorage {
 
   const StatsMap& stats() const { return stats_; }
 
+  const tables::ClockSnapshotTable& clock_snapshot_table() const {
+    return clock_snapshot_table_;
+  }
+  tables::ClockSnapshotTable* mutable_clock_snapshot_table() {
+    return &clock_snapshot_table_;
+  }
+
   const tables::MetadataTable& metadata_table() const {
     return metadata_table_;
   }
@@ -742,6 +750,9 @@ class TraceStorage {
   tables::GpuTrackTable gpu_track_table_{&string_pool_, &track_table_};
   tables::ProcessTrackTable process_track_table_{&string_pool_, &track_table_};
   tables::ThreadTrackTable thread_track_table_{&string_pool_, &track_table_};
+
+  // Clock snapshot data
+  tables::ClockSnapshotTable clock_snapshot_table_{&string_pool_, nullptr};
 
   // Track tables for counter events.
   tables::CounterTrackTable counter_track_table_{&string_pool_, &track_table_};

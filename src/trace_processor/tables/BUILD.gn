@@ -26,6 +26,7 @@ source_set("tables") {
     "slice_tables.h",
     "table_destructors.cc",
     "track_tables.h",
+    "clock_tables.h"
   ]
   deps = [
     "../../../gn:default_deps",

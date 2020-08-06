@@ -21,6 +21,7 @@
 #include "src/trace_processor/tables/profiler_tables.h"
 #include "src/trace_processor/tables/slice_tables.h"
 #include "src/trace_processor/tables/track_tables.h"
+#include "src/trace_processor/tables/clock_tables.h"
 
 namespace perfetto {
 namespace trace_processor {
@@ -35,6 +36,9 @@ AndroidLogTable::~AndroidLogTable() = default;
 
 // counter_tables.h
 CounterTable::~CounterTable() = default;
+
+// clock_table.h
+ClockSnapshotTable::~ClockSnapshotTable() = default;
 
 // metadata_tables.h
 RawTable::~RawTable() = default;

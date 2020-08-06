@@ -29,6 +29,8 @@
 #include "protos/perfetto/common/builtin_clock.pbzero.h"
 #include "protos/perfetto/trace/clock_snapshot.pbzero.h"
 
+#include "src/trace_processor/tables/clock_tables.h"
+
 namespace perfetto {
 namespace trace_processor {
 
@@ -136,6 +138,14 @@ void ClockTracker::AddSnapshot(const std::vector<ClockValue>& clocks) {
       auto end = graph_.lower_bound(ClockGraphEdge{clock_id + 1, 0, 0});
       graph_.erase(begin, end);
     }
+    {
+      tables::ClockSnapshotTable::Row row {};
+      row.source = static_cast<int64_t>(clock_id);
+      row.value = timestamp_ns;
+      auto* clock_table = context_->storage->mutable_clock_snapshot_table();
+      clock_table->Insert(row);
+    }
+
     vect.snapshot_ids.emplace_back(snapshot_id);
     vect.timestamps_ns.emplace_back(timestamp_ns);
   }
