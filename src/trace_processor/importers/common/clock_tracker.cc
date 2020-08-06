@@ -140,7 +140,7 @@ void ClockTracker::AddSnapshot(const std::vector<ClockValue>& clocks) {
     }
     {
       tables::ClockSnapshotTable::Row row {};
-      row.source = static_cast<int64_t>(clock_id);
+      row.source = clock_id;
       row.value = timestamp_ns;
       auto* clock_table = context_->storage->mutable_clock_snapshot_table();
       clock_table->Insert(row);

@@ -110,7 +110,7 @@ class TraceProcessorContext;
 
 class ClockTracker {
  public:
-  using ClockId = uint64_t;
+  using ClockId = int64_t;
 
   // IDs in the range [64, 128) are reserved for sequence-scoped clock ids.
   // They can't be passed directly in ClockTracker calls and must be resolved
@@ -123,7 +123,7 @@ class ClockTracker {
   // passed as argument to ClockTracker functions.
   static ClockId SeqScopedClockIdToGlobal(uint32_t seq_id, uint32_t clock_id) {
     PERFETTO_DCHECK(IsReservedSeqScopedClockId(clock_id));
-    return (static_cast<uint64_t>(seq_id) << 32) | clock_id;
+    return (static_cast<int64_t>(seq_id) << 32) | clock_id;
   }
 
   // Returns whether |global_clock_id| represents a sequence-scoped clock, i.e.
